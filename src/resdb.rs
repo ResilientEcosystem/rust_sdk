@@ -1,7 +1,6 @@
-mod transaction;
-mod blocks;
-use transaction::Transaction;
-use blocks::Blocks;
+// resdb.rs
+use crate::transaction::Transaction;
+// use crate::blocks::Blocks;
 
 
 pub struct ResDB {
@@ -23,39 +22,41 @@ impl ResDB {
         Transaction::new()
     }
 
-    pub fn get_all_transactions(&self) {
-        transaction.get_all_transactions(&self.database_url);
+    pub async fn get_all_transactions(&self) -> Result<Vec<Transaction>, anyhow::Error> {
+        Transaction::get_all_transactions(&self.database_url).await
     }
 
-    pub fn get_transaction_by_id(&self, id: &str) {
-        transaction.get_transaction_by_id(&self.database_url);
+    pub async fn get_transaction_by_id(&self, id: &str) {
+        let transactions = Transaction::get_transaction_by_id(&self.database_url);
     }
 
 
-    pub fn get_transaction_by_key_range(&self, key1: &str, key2: &str) {
-        transaction.get_transaction_by_key_range(&self.database_url, key1, key2);
-    }
+    // pub fn get_transaction_by_key_range(&self, key1: &str, key2: &str) {
+    //     let transaction = Transaction::new();  // Create a new instance of Transaction
+    //     transaction.get_transaction_by_key_range(&self.database_url, key1, key2);
+    // }
 
-    pub fn commit_transaction(&self) {
-        transaction.commit_transaction(&self.database_url);
-    }
+    // pub fn commit_transaction(&self) {
+    //     let transaction = Transaction::new();  // Create a new instance of Transaction
+    //     transaction.commit_transaction(&self.database_url);
+    // }
 
     // functions relating to the blocks endpoints: TO-DO!
 
-    // retrive all the blocks within the chain
-    pub fn get_all_blocks(&self) {
-        blocks.commit_transaction(&self.database_url);
-    }
+    // // retrive all the blocks within the chain
+    // pub fn get_all_blocks(&self) {
+    //     blocks.commit_transaction(&self.database_url);
+    // }
 
-    // retrive blocks in batch sizes, order remains the same
-    pub fn get_blocks_by_batch(&self, size: &[int32]) {
-        blocks.commit_transaction(&self.database_url);
-    }
+    // // retrive blocks in batch sizes, order remains the same
+    // pub fn get_blocks_by_batch(&self, size: &[int32]) {
+    //     blocks.commit_transaction(&self.database_url);
+    // }
 
-    // retrive blocks within the chain within a range. Ex. 1 -> 10
-    pub fn get_blocks_by_range(&self, int32: size) {
-        blocks.commit_transaction(&self.database_url);
-    }
+    // // retrive blocks within the chain within a range. Ex. 1 -> 10
+    // pub fn get_blocks_by_range(&self, int32: size) {
+    //     blocks.commit_transaction(&self.database_url);
+    // }
 }
 
 

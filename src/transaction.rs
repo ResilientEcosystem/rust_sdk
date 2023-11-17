@@ -1,8 +1,11 @@
+// transaction.rs
 // use reqwest::Error;
 use std::fs::File;
 use std::io::Read;
 use serde::Deserialize;
 use anyhow::Error;
+
+use super::ResDB;
 
 #[derive(Debug, Deserialize)]
 pub struct Transaction {
@@ -52,7 +55,13 @@ impl Transaction {
     pub fn new() -> Self {
         // Implementation for creating a new Transaction instance
         Transaction {
-            // Initialize your fields as needed
+            inputs: Vec::new(),
+            outputs: Vec::new(),
+            operation: String::new(),
+            metadata: None,
+            asset: Asset { data: serde_json::Value::Null },
+            version: String::new(),
+            id: String::new(),
         }
     }
 
@@ -117,39 +126,15 @@ impl Transaction {
     }
 
     // implementation of GET v1/transactions/<string>/<string>
-    pub async fn get_transaction_by_key_range(api_url: &str) -> Result<Vec<Transaction>, anyhow::Error> {
-        // Make an asynchronous GET request to the specified API endpoint
-        let response_text = reqwest::get(api_url).await?;
-        
-        // Open the file -> REPLACE THIS CODE
-        let mut file = File::open("/Users/dhruv/Desktop/Repositories/resdb_rust_sdk/json_data/transactions.json").expect("Unable to open the file");
-        // Read the file content into a string
-        let mut content = String::new();
-        file.read_to_string(&mut content).expect("Unable to read the file");
-    
-    
-        let json_array: Vec<serde_json::Value> = serde_json::from_str(&content)?;
-        let mut transactions = Vec::new();
-    
-        for json_obj in json_array{
-            let transaction: Transaction = serde_json::from_value(json_obj)?;
-            transactions.push(transaction);
-        }
-        
-        // let response: Result<Transaction, serde_json::Error> = serde_json::from_str(&content);
-        let response: Result<Vec<Transaction>, serde_json::Error> = Ok(transactions);
-    
-        // Handle the deserialization result
-        match response {
-            Ok(parsed_response) => Ok(parsed_response),
-            Err(err) => Err(anyhow::Error::from(err)),
-        }
-    }
+
+    // pub async fn get_transaction_by_key_range(api_url: &str) -> Result<Vec<Transaction>, anyhow::Error> {
+    // }
 
     // implementation of POST v1/transactions/commit
-    pub async fn commit_transaction(api_url: &str) -> Result<Vec<Transaction>, anyhow::Error> {
 
-    }
+    // pub async fn commit_transaction(api_url: &str) -> Result<Vec<Transaction>, anyhow::Error> {
+
+    // }
 }
 
 
