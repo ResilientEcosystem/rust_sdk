@@ -226,6 +226,7 @@ async fn test_blocks_api_map() {
         }
         Err(error) => {
             // Handle the error
+            println!("HERE2");
             eprintln!("Error: {}", error);
         }
     }
@@ -233,8 +234,8 @@ async fn test_blocks_api_map() {
 
 
 fn main(){
-    test_transaction_api();
-    test_transaction_api_map();
-    test_blocks_api();
+    //test_transaction_api();
+    //test_transaction_api_map();
+    //test_blocks_api();
     test_blocks_api_map()
 }
