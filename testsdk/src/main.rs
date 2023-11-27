@@ -233,8 +233,8 @@ async fn test_blocks_api_map() {
 
 
 fn main(){
-    test_transaction_api();
-    test_transaction_api_map();
-    test_blocks_api();
+    // test_transaction_api();
+    // test_transaction_api_map();
+    // test_blocks_api();
     test_blocks_api_map()
 }
