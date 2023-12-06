@@ -177,10 +177,18 @@ impl ResDB {
     }
 
     /** APIs provided to create public/private key pairs and Hashing **/
-
-    pub fn generate_keypair() -> (Vec<u8>, PKey<Private>)
+    pub fn generate_keypair(key_size: usize) -> (Vec<u8>, PKey<Private>)
+    //pub fn generate_keypair() -> (Vec<u8>, PKey<Private>)
     where
     {
-        crypto::generate_keypair()
+        crypto::generate_keypair(key_size: usize)
     }
+    
+     /** APIs provided to create hashed data using SHA3-256 **/
+    pub fn hash_data(data: &str) -> String
+    where
+    {
+        crypto::hash_data(data: &str)
+    }  
+    
 }
