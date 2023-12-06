@@ -243,4 +243,14 @@ fn main(){
     // test_blocks_api();
     // test_blocks_api_map();
     test_crypto()
+    // Testing code for crypto module
+    let keypair = crypto::generate_keypair(2048);
+    println!("Public Key: {:?}", keypair.0);
+    // Handle the private key securely
+    // Printing here for testing only
+    println!("Private Key: [hidden]");
+
+    let data = "Hello, World!";
+    let hashed_data = crypto::hash_data(data);
+    println!("Hashed Data: {}", hashed_data);
 }
