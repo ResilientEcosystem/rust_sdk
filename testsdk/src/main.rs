@@ -5,6 +5,7 @@ use resdb_rust_sdk::ResDB;
 mod models;
 use models::Transaction;
 use models::Block;
+// use models::CryptoKeypair;
 
 use std::collections::HashMap;
 
@@ -232,9 +233,51 @@ async fn test_blocks_api_map() {
 }
 
 
-fn main(){
-    // test_transaction_api();
-    // test_transaction_api_map();
-    // test_blocks_api();
-    test_blocks_api_map()
+
+
+
+
+
+// fn main(){
+//     // test_transaction_api();
+//     // test_transaction_api_map();
+//     // test_blocks_api();
+//     // test_blocks_api_map()
+  
+//     // Generate key pair
+//     let keypair = generate_keypair(None);
+//     println!("Private Key: {:?}", keypair.private_key);
+//     println!("Public Key: {:?}", keypair.public_key);
+
+//     // Hash data
+//     let data_to_hash = "Some data to hash";
+//     let hashed_data = hash_data(data_to_hash);
+//     println!("Hashed data: {}", hashed_data);
+// }
+
+#[tokio::main]
+async fn main() -> Result<(), Box<dyn std::error::Error>> {
+    let client = reqwest::Client::builder()
+        .build()?;
+
+    let mut headers = reqwest::header::HeaderMap::new();
+    headers.insert("Content-Type", "application/json".parse()?);
+
+    let data = r#"
+{
+    "query": "mutation { postTransaction(data: {\noperation: \"CREATE\"\namount: 69\nsignerPublicKey: \"8fPAqJvAFAkqGs8GdmDDrkHyR7hHsscVjes39TVVfN54\"\nsignerPrivateKey: \"5R4ER6smR6c6fsWt3unPqP6Rhjepbn82Us7hoSj5ZYCc\"\nrecipientPublicKey: \"ECJksQuF9UWi3DPCYvQqJPjF6BqSbXrnDiXUjdiVvkyH\"\nasset: \"\"\"{\n            \"data\": { \"time\": 444\n            },\n          }\"\"\"\n      }) {\n  id\n  }\n}\n"
+}
+"#;
+    let json: serde_json::Value = serde_json::from_str(&data)?;
+
+    let request = client.request(reqwest::Method::POST, "https://cloud.resilientdb.com/graphql")
+        .headers(headers)
+        .json(&json);
+
+    let response = request.send().await?;
+    let body = response.text().await?;
+
+    println!("{}", body);
+
+    Ok(())
 }
